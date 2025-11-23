@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support;
 
 namespace MyAutomationPractice.Tests.WebTests
 {
-    public class OrangeHRMTests:BaseWebTest
+    public class AutomationExcerciseTests:BaseWebTest
     {
         public string? RegisteredUserName { get; set; }
         public string? RegisteredUserEmail { get; set; }
