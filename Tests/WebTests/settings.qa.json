@@ -11,5 +11,6 @@
   "Admin3": {
     "username": "",
     "password": ""
-  }
+  },
+  "browser": "firefox"
 }

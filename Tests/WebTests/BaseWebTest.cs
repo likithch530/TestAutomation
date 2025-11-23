@@ -17,9 +17,11 @@ namespace MyAutomationPractice.Tests.WebTests
         [OneTimeSetUp]
         public void OnceBeforeAllTests()
         {
-            _driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--incognito");
+            _driver = new ChromeDriver(options);
             _driver.Manage().Window.Maximize();
-            _driver.Navigate().GoToUrl("https://ravikumar424-trials719.orangehrmlive.com");
+            _driver.Navigate().GoToUrl("https://www.automationexercise.com/");
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
             wait.Until(d =>((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").ToString() == "complete");
         }
@@ -27,19 +29,19 @@ namespace MyAutomationPractice.Tests.WebTests
         [SetUp]
         public void OnceBeforeEachTest()
         {
-            // Optional: can be used for pre-test setup
+            
         }
 
         [TearDown]
         public void OnceAfterEachTests()
         {
-            // Optional: clean up cookies or session between tests
-            //_driver.Manage().Cookies.DeleteAllCookies();
+           
         }
 
         [OneTimeTearDown]
         public void OnceAfterAllTests()
         {
+            _driver.Dispose();
             _driver.Quit();
         }
     }
