@@ -21,28 +21,27 @@ namespace MyAutomationPractice.Tests.WebTests
             options.AddArgument("--incognito");
             _driver = new ChromeDriver(options);
             _driver.Manage().Window.Maximize();
-            _driver.Navigate().GoToUrl("https://www.automationexercise.com/");
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
-            wait.Until(d =>((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").ToString() == "complete");
         }
 
         [SetUp]
         public void OnceBeforeEachTest()
         {
-            
+            _driver.Navigate().GoToUrl("https://www.automationexercise.com/");
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+            wait.Until(d => ((IJavaScriptExecutor)d).ExecuteScript("return document.readyState").ToString() == "complete");
         }
 
         [TearDown]
         public void OnceAfterEachTests()
         {
-           
+            
         }
 
         [OneTimeTearDown]
         public void OnceAfterAllTests()
         {
-            _driver.Dispose();
             _driver.Quit();
+            _driver.Dispose();
         }
     }
 }

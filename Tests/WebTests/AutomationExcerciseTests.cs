@@ -10,12 +10,14 @@ namespace MyAutomationPractice.Tests.WebTests
 {
     public class AutomationExcerciseTests:BaseWebTest
     {
+        public string Driver { get; set; }
         public string? RegisteredUserName { get; set; }
         public string? RegisteredUserEmail { get; set; }
         public string? RegisteredUserPassword { get; set; }
         public string? RegisteredUserDob { get; set; }
 
         [Test]
+        [Order(1)]
         public void TC1_TestRegisterUser()
         {
             AutomationExcerciseHomePage homePage = new AutomationExcerciseHomePage(_driver);
@@ -81,6 +83,7 @@ namespace MyAutomationPractice.Tests.WebTests
         }
 
         [Test]
+        [Order(2)]
         public void TC2_TestLoginWithCorrectEmailPassword_VerifyLoginSuccess()
         {
             RegisterUserWithoutDeletion();
@@ -108,6 +111,8 @@ namespace MyAutomationPractice.Tests.WebTests
             deletePage.ContinueButton.Click();
         }
 
+        [Test]
+        [Order(3)]
         [TestCase("dummy@gmail.com","dummyaccount")]
         public void TC3_TestLoginWithInCorrectEmailPassword_VerifyLoginFail(string incorrectEmail,string incorrectPassword)
         {
@@ -128,6 +133,32 @@ namespace MyAutomationPractice.Tests.WebTests
             Assert.That(loginErrorMessage.Text, Is.EqualTo("Your email or password is incorrect!"), "Email/password incorrect message is not displayed on login with incorrect creds");
             Assert.That(loginErrorMessage.Displayed, Is.True, "Email/password incorrect message is not displayed on login with incorrect creds");
             Assert.That(loginErrorMessage.GetAttribute("style"),Does.Contain("red") , "Email/password incorrect message is not displayed on login with incorrect creds not in red color");
+        }
+
+        [Test]
+        [Order(4)]
+        public void TC4_TestLogOutUser()
+        {
+            RegisterUserWithoutDeletion();
+            AutomationExcerciseHomePage homePage = new AutomationExcerciseHomePage(_driver);
+            var isLogoDisplayedOnHomePage = homePage.HeaderComponent.Logo.Displayed;
+            Assert.That(isLogoDisplayedOnHomePage, Is.True, "Logo is not displayed on Home Page");
+
+            AutomationExcerciseDashboardPage dashboardPage = new AutomationExcerciseDashboardPage(_driver);
+            var loggedInAsMessage = dashboardPage.HeaderComponent.NavigationMenu.MenuItems.First(x => x.Text.Contains("Logged in as")).Displayed;
+            Assert.That(loggedInAsMessage, Is.True, "Logged in as message is not displayed on login with correct creds");
+
+            AutomationExcerciseLoginPage loginPage = new AutomationExcerciseLoginPage(_driver);
+            homePage.HeaderComponent.NavigationMenu.MenuItems.First(x => x.Text.Contains("Logout")).Click();
+            var isUserOnSignInPage= loginPage.LoginForm.Title.Displayed;
+            Assert.That(isUserOnSignInPage, Is.True, "User is not navigated to login page on logout");
+        }
+
+        [Test]
+        [Order(5)]
+        public void TC5_TestFifthTestCase()
+        {
+
         }
 
         private void RegisterUserWithoutDeletion()

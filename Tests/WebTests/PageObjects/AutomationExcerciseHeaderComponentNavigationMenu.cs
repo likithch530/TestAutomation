@@ -25,7 +25,7 @@ namespace MyAutomationPractice.Tests.WebTests.PageObjects
         {
             get
             {
-                return Menu.FindElements(By.XPath("./li/a"));
+                return Driver.FindElement(By.XPath(_menuIdentifier)).FindElements(By.XPath("./li/a"));
             }
         }
     }

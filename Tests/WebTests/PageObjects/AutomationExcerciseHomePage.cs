@@ -25,5 +25,10 @@ namespace MyAutomationPractice.Tests.WebTests.PageObjects
                 return new AutomationExcerciseHeaderComponent(Driver);
             }
         }
+
+        public void LaunchHomePage()
+        {
+            Driver.Navigate().GoToUrl("https://www.automationexercise.com/");
+        }
     }
 }
